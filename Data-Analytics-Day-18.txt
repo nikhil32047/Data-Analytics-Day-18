@@ -1,0 +1,68 @@
+Advanced SQL for Analytics:
+=========================
+
+1)Window Functions (OVER, PARTITION BY, ORDER BY)
+
+Window functions allow calculations across a set of rows related to the current row, without grouping the entire dataset.
+
+Example: Ranking customers by sales within each region.
+
+SELECT customer_id, region, sales,
+       RANK() OVER (PARTITION BY region ORDER BY sales DESC) AS sales_rank
+FROM sales_data;
+
+
+2)CTEs (Common Table Expressions)
+
+CTEs make SQL queries more readable and modular by creating temporary result sets.
+
+Example:
+
+WITH regional_sales AS (
+    SELECT region, SUM(sales) AS total_sales
+    FROM sales_data
+    GROUP BY region
+)
+SELECT region
+FROM regional_sales
+WHERE total_sales > 50000;
+
+
+3)Subqueries (Nested Queries)
+
+A query inside another query, often used for filtering or aggregation.
+
+Example: Find products with sales above average:
+
+SELECT product_id, sales
+FROM sales_data
+WHERE sales > (SELECT AVG(sales) FROM sales_data);
+
+
+4)Stored Procedures & Functions
+
+Reusable SQL code stored in the database for complex operations.
+
+Example:
+
+CREATE PROCEDURE GetTopCustomers()
+BEGIN
+    SELECT customer_id, SUM(sales) as total_sales
+    FROM sales_data
+    GROUP BY customer_id
+    ORDER BY total_sales DESC
+    LIMIT 5;
+END;
+
+
+5)Case Study: Analyzing Employee Performance
+
+Use window functions, CTEs, and subqueries together to evaluate employee performance:
+
+Rank employees by monthly sales.
+
+Identify top 10% performers.
+
+Compare each employee’s sales against regional averages.
+
+✅ By today, you’ll master advanced SQL techniques that make you stand out as a data analyst.
